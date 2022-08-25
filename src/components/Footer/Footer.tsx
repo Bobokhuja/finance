@@ -29,18 +29,18 @@ function Footer() {
             checked={status === StatusFilter.All}
           />
           <Radio
-            label="Выполненные"
+            label="Доходы"
             name="filter"
-            value={StatusFilter.Completed}
-            onChange={() => dispatch(changeStatus('completed'))}
-            checked={status === StatusFilter.Completed}
+            value={StatusFilter.Income}
+            onChange={() => dispatch(changeStatus('income'))}
+            checked={status === StatusFilter.Income}
           />
           <Radio
             label="Не выполненные"
             name="filter"
-            value={StatusFilter.Active}
-            onChange={() => dispatch(changeStatus('active'))}
-            checked={status === StatusFilter.Active}
+            value={StatusFilter.Consumption}
+            onChange={() => dispatch(changeStatus('consumption'))}
+            checked={status === StatusFilter.Consumption}
           />
         </form>
       </div>
