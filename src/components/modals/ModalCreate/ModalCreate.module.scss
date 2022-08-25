@@ -23,13 +23,15 @@
 }
 
 .Button {
-  width: 100%;
+  width: 100% !important;
 }
 
 .RadioButtons {
   margin-bottom: 20px;
   background: #eee;
   display: flex;
+  padding: 5px;
+  border-radius: 5px;
 
   div:first-child {
     margin-right: 10px;

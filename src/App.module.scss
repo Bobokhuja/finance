@@ -9,19 +9,13 @@
   }
 }
 
-.EnterActive {
-  animation: fade .5s forwards;
-}
+.Cash {
+  text-align: center;
+  margin: 50px 0;
+  font-size: 54px;
+  font-weight: 800;
 
-.ExitActive {
-  animation: fade .5s forwards alternate-reverse;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+  &.Minus {
+    color: red;
   }
 }

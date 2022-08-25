@@ -1,7 +1,7 @@
 import classes from './ModalCreate.module.scss'
 import Modal from '../Modal'
 import Input from '../../UI/Input/Input'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { transactionAdded } from '../../../features/transactions/transactionsSlice'
 import { ITransaction } from '../../../models/ITransaction'
@@ -30,6 +30,8 @@ function ModalCreate({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
     if (name) {
       dispatch(transactionAdded({
         id: nextTodoId(transactions),
+        name,
+        description,
         type: transactionType,
         cash,
         date: Date.now()

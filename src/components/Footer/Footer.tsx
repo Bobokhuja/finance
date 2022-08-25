@@ -36,7 +36,7 @@ function Footer() {
             checked={status === StatusFilter.Income}
           />
           <Radio
-            label="Не выполненные"
+            label="Расходы"
             name="filter"
             value={StatusFilter.Consumption}
             onChange={() => dispatch(changeStatus('consumption'))}
