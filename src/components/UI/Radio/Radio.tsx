@@ -9,6 +9,7 @@ export interface IRadio {
 }
 
 function Radio({label, name, value, checked = false, onChange}: IRadio) {
+  const htmlFor: string = `${name}-${label}`
   return (
     <div className={classes.RadioWrap}>
       <input
@@ -17,11 +18,11 @@ function Radio({label, name, value, checked = false, onChange}: IRadio) {
         value={value}
         checked={checked}
         className={classes.Radio}
-        id={value}
+        id={htmlFor}
         onChange={onChange}
       />
       <label
-        htmlFor={value}
+        htmlFor={htmlFor}
         className={classes.Label}
       >{label}</label>
     </div>

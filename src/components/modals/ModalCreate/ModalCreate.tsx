@@ -1,14 +1,14 @@
 import classes from './ModalCreate.module.scss'
 import Modal from '../Modal'
 import Input from '../../UI/Input/Input'
-import { useState } from 'react'
-import Textarea from '../../UI/Textarea/Textarea'
-import Button from '../../UI/Button/Button'
+import { useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { transactionAdded } from '../../../features/transactions/transactionsSlice'
 import { ITransaction } from '../../../models/ITransaction'
 import Radio from '../../UI/Radio/Radio'
-import { changeStatus, StatusFilter } from '../../../features/filters/filtersSlice'
+import { StatusFilter } from '../../../features/filters/filtersSlice'
+import Button from '../../UI/Button/Button'
+import Textarea from '../../UI/Textarea/Textarea'
 
 const nextTodoId = (todos: ITransaction[]) => {
   console.log(todos)
@@ -30,17 +30,22 @@ function ModalCreate({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
     if (name) {
       dispatch(transactionAdded({
         id: nextTodoId(transactions),
-        type: 'income',
+        type: transactionType,
         cash,
         date: Date.now()
       }))
       onHide()
     }
+
+    setName('')
+    setCash(0)
+    setDescription('')
+    setTransactionType('income')
   }
 
   return (
     <Modal isShow={isShow} onHide={onHide}>
-      <h2 className={classes.Title}>Создать Todo</h2>
+      <h2 className={classes.Title}>Создать Операцию</h2>
 
       <form>
         <Input
@@ -60,7 +65,7 @@ function ModalCreate({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
           required={true}
         />
 
-        <div>
+        <div className={classes.RadioButtons}>
           <Radio
             label="доход"
             name="typeTransaction"

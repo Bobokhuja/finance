@@ -1,8 +1,8 @@
 import classes from './Footer.module.scss'
 import Input from '../UI/Input/Input'
-import Radio from '../UI/Radio/Radio'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { changeStatus, StatusFilter, searchTodo } from '../../features/filters/filtersSlice'
+import Radio from '../UI/Radio/Radio'
 
 function Footer() {
   const dispatch = useAppDispatch()

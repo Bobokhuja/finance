@@ -1,0 +1,27 @@
+.App {
+  min-height: 100%;
+  padding-bottom: 150px;
+
+  .CreateButton {
+    display: block;
+    margin: 35px auto 64px;
+    width: 200px;
+  }
+}
+
+.EnterActive {
+  animation: fade .5s forwards;
+}
+
+.ExitActive {
+  animation: fade .5s forwards alternate-reverse;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
