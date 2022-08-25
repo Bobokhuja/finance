@@ -1,0 +1,15 @@
+.Header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    background: #836BE0;
+    box-shadow: 0 0 7px #000000;
+}
+
+.Title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: #fff;
+}
