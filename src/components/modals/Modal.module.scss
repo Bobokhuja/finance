@@ -1,0 +1,47 @@
+.Content {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: #fff;
+  width: 460px;
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  transition: all .5s;
+}
+
+.EnterActive {
+  animation: fadeBackdrop .5s forwards;
+}
+
+.ExitActive {
+  animation: fadeBackdrop .5s forwards alternate-reverse;
+}
+
+.EnterContent {
+  animation: fadeModal .3s forwards;
+}
+
+.ExitContent {
+  animation: fadeModal .3s forwards alternate-reverse;
+}
+
+@keyframes fadeBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeModal {
+  from {
+    transform: translate(-50%, -200px);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}

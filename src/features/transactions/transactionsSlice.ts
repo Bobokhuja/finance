@@ -40,3 +40,5 @@ export const transactionsSlice = createSlice({
     }
   }
 })
+
+export const {transactionAdded, transactionChanged, transactionDeleted} = transactionsSlice.actions
