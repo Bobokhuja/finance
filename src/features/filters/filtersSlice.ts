@@ -31,4 +31,4 @@ export const filtersSlice = createSlice({
   }
 })
 
-export const {} = filtersSlice.actions
+export const {searchTodo, changeStatus} = filtersSlice.actions
