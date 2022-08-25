@@ -1,8 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { transactionsSlice } from '../features/transactions/transactionsSlice'
+import { filtersSlice } from '../features/filters/filtersSlice'
 
 export const store = configureStore({
   reducer: {
-
+    transactions: transactionsSlice.reducer,
+    filters: filtersSlice.reducer
   },
 })
 
