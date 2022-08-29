@@ -11,8 +11,7 @@ function TransactionList() {
         if (search === '') {
           return state.transactions.transactions
         } else {
-          return state.
-          transactions.transactions
+          return state.transactions.transactions
             .filter(transaction => transaction.name.startsWith(search) || transaction.cash.toString().startsWith(search))
         }
       }
@@ -25,20 +24,38 @@ function TransactionList() {
     }
   })
 
+  const typeList = {
+    income: 'доход',
+    consumption: 'расход'
+  }
+
   return (
-    <ul className={classes.List}>
-      {transactions.map(transaction =>
-        <TransactionItem
-          key={transaction.id}
-          id={transaction.id}
-          name={transaction.name}
-          description={transaction.description}
-          type={transaction.type}
-          cash={transaction.cash}
-          date={transaction.date}
-        />
-      )}
-    </ul>
+    <section className={classes.Transactions}>
+      <table className={classes.Table}>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Сумма</th>
+          <th>Тип операции</th>
+          <th>Название</th>
+          <th>Описание</th>
+          <th>Дата транзакции</th>
+        </tr>
+        </thead>
+        <tbody>
+        {transactions.map(transaction =>
+          <tr key={transaction.id} className={`${transaction.type === 'income' ? classes.IncomeType : ''}`}>
+            <td>{transaction.id}</td>
+            <td>{transaction.cash}</td>
+            <td>{typeList[transaction.type]}</td>
+            <td>{transaction.name}</td>
+            <td>{transaction.description}</td>
+            <td>{new Date(transaction.date).toLocaleString()}</td>
+          </tr>
+        )}
+        </tbody>
+      </table>
+    </section>
   )
 }
 

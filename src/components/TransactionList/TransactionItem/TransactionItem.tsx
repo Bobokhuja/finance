@@ -16,6 +16,7 @@ function TransactionItem({id, cash, date, type, name, description}: ITransaction
         <p
           className={classes.Name}
         >{name}</p>
+        <time className={classes.Time} dateTime={date.toString()}>{new Date(date).toLocaleString()}</time>
 
         <div className={classes.Right}>
           <button
@@ -27,22 +28,11 @@ function TransactionItem({id, cash, date, type, name, description}: ITransaction
               <path d="M1 1C15.1333 15.4 18.6667 19 18.6667 19" stroke="#777777" strokeWidth="2"/>
               <path d="M19 1C4.86667 15.4 1.33333 19 1.33333 19" stroke="#777777" strokeWidth="2"/>
             </svg>
-
           </button>
-          {/*<button*/}
-          {/*  title={status ? 'Снять галочку' : 'Выполнить'}*/}
-          {/*  className={classes.Complete}*/}
-          {/*  onClick={() => dispatch(changeStatus(id))}*/}
-          {/*>*/}
-          {/*  {status && (*/}
-          {/*    <svg width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
-          {/*      <path d="M1 5.5L6.12793 11L15.5 1" stroke="#149E6C" strokeWidth="2"/>*/}
-          {/*    </svg>*/}
-          {/*  )}*/}
-          {/*</button>*/}
+
           {description && (
             <button
-              title="Описание задачи"
+              title="Описание транзакции"
               className={`${classes.More} ${isShow ? classes.Active : ''}`}
               onClick={() => setIsShow(prevState => !prevState)}
             >

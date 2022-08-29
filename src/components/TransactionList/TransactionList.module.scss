@@ -5,3 +5,36 @@
   margin: 0 auto;
   overflow-y: auto;
 }
+
+.Transactions {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.Table {
+  border: 1px solid #ccc;
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    font-weight: 700;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  tbody {
+    tr {
+      padding: 0;
+      background: rgba(255, 0, 0, .1);
+    }
+  }
+
+  .IncomeType {
+    background: rgba(0, 255, 0, .1);
+  }
+
+  td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+}
