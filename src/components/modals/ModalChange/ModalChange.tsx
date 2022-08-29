@@ -1,9 +1,9 @@
-import classes from './ModalCreate.module.scss'
+import classes from './ModalChange.module.scss'
 import Modal from '../Modal'
 import Input from '../../UI/Input/Input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { transactionAdded } from '../../../features/transactions/transactionsSlice'
+import { transactionAdded, transactionChanged } from '../../../features/transactions/transactionsSlice'
 import { ITransaction } from '../../../models/ITransaction'
 import Radio from '../../UI/Radio/Radio'
 import { StatusFilter } from '../../../features/filters/filtersSlice'
@@ -16,7 +16,7 @@ const nextTodoId = (todos: ITransaction[]) => {
     Math.max(maxId, todo.id), 0) + 1
 }
 
-function ModalChange({onHide, isShow}: { isShow: boolean, onHide: () => void }) {
+function ModalChange({onHide, isShow, transactionId}: { isShow: boolean, onHide: () => void, transactionId: number | undefined }) {
   const [name, setName] = useState<string>('')
   const [cash, setCash] = useState<number>(0)
   const [description, setDescription] = useState<string>('')
@@ -24,12 +24,26 @@ function ModalChange({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
   const [transactionType, setTransactionType] = useState<'income' | 'consumption'>('income')
   const dispatch = useAppDispatch()
 
-  const onCreateHandler = (event: any) => {
+  useEffect(() => {
+    if (transactionId) {
+      const transaction = transactions.find(transaction => transaction.id === transactionId)
+      setName(transaction!.name)
+      setDescription(transaction!.description)
+      setCash(transaction!.cash)
+      setTransactionType(transaction!.type)
+    }
+  }, [transactionId])
+
+  if (!transactionId) {
+    return null
+  }
+
+  const onChangeHandler = (event: any) => {
     event.preventDefault()
 
     if (name) {
-      dispatch(transactionAdded({
-        id: nextTodoId(transactions),
+      dispatch(transactionChanged({
+        id: transactionId,
         name,
         description,
         type: transactionType,
@@ -39,15 +53,15 @@ function ModalChange({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
       onHide()
     }
 
-    setName('')
-    setCash(0)
-    setDescription('')
-    setTransactionType('income')
+    // setName('')
+    // setCash(0)
+    // setDescription('')
+    // setTransactionType('income')
   }
 
   return (
     <Modal isShow={isShow} onHide={onHide}>
-      <h2 className={classes.Title}>Создать Операцию</h2>
+      <h2 className={classes.Title}>Изменить операцию</h2>
 
       <form>
         <Input
@@ -94,8 +108,8 @@ function ModalChange({onHide, isShow}: { isShow: boolean, onHide: () => void }) 
         <Button
           type="submit"
           className={classes.Button}
-          onClick={onCreateHandler}
-        >Создать</Button>
+          onClick={onChangeHandler}
+        >Изменить</Button>
       </form>
     </Modal>
   )

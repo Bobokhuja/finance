@@ -11,34 +11,39 @@ const initialState: ITransactionsSlice = {
   cash: 0
 }
 
+const getSum = (transactions: ITransaction[]): number => {
+  return transactions.reduce((sum: number, item) => {
+    switch (item.type) {
+      case 'income':
+        return sum + item.cash
+      case 'consumption':
+        return sum - item.cash
+    }
+  }, initialState.cash)
+}
+
 export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
     transactionAdded(state, action: PayloadAction<ITransaction>) {
       state.transactions.push(action.payload)
-      switch (action.payload.type) {
-        case 'consumption':
-          state.cash -= action.payload.cash
-          break
-        case 'income':
-          state.cash += action.payload.cash
-      }
+      state.cash = getSum(state.transactions)
     },
     transactionChanged(state, action: PayloadAction<ITransaction>) {
       state.transactions = state.transactions.map(transaction => {
         if (action.payload.id === transaction.id) {
-          state.cash += transaction.cash
           return action.payload
         }
         return transaction
       })
+      state.cash = getSum(state.transactions)
     },
     transactionDeleted(state, action: PayloadAction<number>) {
       state.transactions = state.transactions
         .filter(transaction => transaction.id !== action.payload)
     }
-  }
+  },
 })
 
 export const {transactionAdded, transactionChanged, transactionDeleted} = transactionsSlice.actions

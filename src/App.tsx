@@ -15,7 +15,12 @@ function App() {
     <div className={classes.App}>
       <Header/>
 
-      <p className={`${classes.Cash} ${cash < 0 ? classes.Minus : ''}`}>{cash}</p>
+      <p className={`${classes.Cash} ${cash < 0 ? classes.Minus : ''}`}>
+        {new Intl.NumberFormat('tj', {
+          currency: 'tjs',
+          style: 'currency'
+        }).format(cash)}
+      </p>
 
       <Button
         className={classes.CreateButton}

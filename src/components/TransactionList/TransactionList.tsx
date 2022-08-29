@@ -1,7 +1,9 @@
 import classes from './TransactionList.module.scss'
-import TransactionItem from './TransactionItem/TransactionItem'
 import { useAppSelector } from '../../app/hooks'
 import { StatusFilter } from '../../features/filters/filtersSlice'
+import ModalChange from '../modals/ModalChange/ModalChange'
+import { useState } from 'react'
+import Button from '../UI/Button/Button'
 
 function TransactionList() {
   const {status, search} = useAppSelector(state => state.filters)
@@ -12,17 +14,34 @@ function TransactionList() {
           return state.transactions.transactions
         } else {
           return state.transactions.transactions
-            .filter(transaction => transaction.name.startsWith(search) || transaction.cash.toString().startsWith(search))
+            .filter(transaction => (transaction.name.indexOf(search) !== -1) ||
+              transaction.cash.toString().startsWith(search))
         }
       }
       case StatusFilter.Income:
-        return state.transactions.transactions.filter(transaction => transaction.type === StatusFilter.Income)
+        if (search === '') {
+          return state.transactions.transactions.filter(transaction =>
+            transaction.type === StatusFilter.Income)
+        } else {
+          return state.transactions.transactions.filter(transaction =>
+            transaction.type === StatusFilter.Income &&
+            (transaction.name.indexOf(search) !== -1) || transaction.cash.toString().startsWith(search))
+        }
       case StatusFilter.Consumption:
-        return state.transactions.transactions.filter(transaction => transaction.type === StatusFilter.Consumption)
+        if (search === '') {
+          return state.transactions.transactions.filter(transaction =>
+            transaction.type === StatusFilter.Consumption)
+        } else {
+          return state.transactions.transactions.filter(transaction =>
+            transaction.type === StatusFilter.Consumption &&
+            (transaction.name.indexOf(search) !== -1) || transaction.cash.toString().startsWith(search))
+        }
       default:
         return state.transactions.transactions
     }
   })
+  const [isActiveModal, setIsActiveModal] = useState<boolean>(false)
+  const [isActiveId, setIsActiveId] = useState<number>()
 
   const typeList = {
     income: 'доход',
@@ -34,9 +53,8 @@ function TransactionList() {
       <table className={classes.Table}>
         <thead>
         <tr>
-          <th>#</th>
-          <th>Сумма</th>
           <th>Тип операции</th>
+          <th>Сумма</th>
           <th>Название</th>
           <th>Описание</th>
           <th>Дата транзакции</th>
@@ -45,16 +63,24 @@ function TransactionList() {
         <tbody>
         {transactions.map(transaction =>
           <tr key={transaction.id} className={`${transaction.type === 'income' ? classes.IncomeType : ''}`}>
-            <td>{transaction.id}</td>
-            <td>{transaction.cash}</td>
             <td>{typeList[transaction.type]}</td>
+            <td>{transaction.cash}</td>
             <td>{transaction.name}</td>
             <td>{transaction.description}</td>
             <td>{new Date(transaction.date).toLocaleString()}</td>
+            <td>
+              <Button
+                onClick={() => {
+                setIsActiveModal(true)
+                setIsActiveId(transaction.id)
+              }}>изменить
+              </Button>
+            </td>
           </tr>
         )}
         </tbody>
       </table>
+      <ModalChange isShow={isActiveModal} onHide={() => setIsActiveModal(false)} transactionId={isActiveId}/>
     </section>
   )
 }
