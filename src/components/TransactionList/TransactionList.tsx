@@ -1,9 +1,10 @@
 import classes from './TransactionList.module.scss'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { StatusFilter } from '../../features/filters/filtersSlice'
 import ModalChange from '../modals/ModalChange/ModalChange'
 import { useState } from 'react'
 import Button from '../UI/Button/Button'
+import { transactionDeleted } from '../../features/transactions/transactionsSlice'
 
 function TransactionList() {
   const {status, search} = useAppSelector(state => state.filters)
@@ -42,6 +43,7 @@ function TransactionList() {
   })
   const [isActiveModal, setIsActiveModal] = useState<boolean>(false)
   const [isActiveId, setIsActiveId] = useState<number>()
+  const dispatch = useAppDispatch()
 
   const typeList = {
     income: 'доход',
@@ -53,6 +55,7 @@ function TransactionList() {
       <table className={classes.Table}>
         <thead>
         <tr>
+          <th></th>
           <th>Тип операции</th>
           <th>Сумма</th>
           <th>Название</th>
@@ -63,6 +66,18 @@ function TransactionList() {
         <tbody>
         {transactions.map(transaction =>
           <tr key={transaction.id} className={`${transaction.type === 'income' ? classes.IncomeType : ''}`}>
+            <td>
+              <button
+                title="Удалить операцию"
+                className={classes.Delete}
+                onClick={() => dispatch(transactionDeleted(transaction.id))}
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1C15.1333 15.4 18.6667 19 18.6667 19" stroke="#777777" strokeWidth="2"/>
+                  <path d="M19 1C4.86667 15.4 1.33333 19 1.33333 19" stroke="#777777" strokeWidth="2"/>
+                </svg>
+              </button>
+            </td>
             <td>{typeList[transaction.type]}</td>
             <td>{transaction.cash}</td>
             <td>{transaction.name}</td>

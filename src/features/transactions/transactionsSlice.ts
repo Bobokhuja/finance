@@ -42,6 +42,7 @@ export const transactionsSlice = createSlice({
     transactionDeleted(state, action: PayloadAction<number>) {
       state.transactions = state.transactions
         .filter(transaction => transaction.id !== action.payload)
+      state.cash = getSum(state.transactions)
     }
   },
 })
